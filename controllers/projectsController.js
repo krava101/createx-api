@@ -19,13 +19,40 @@ async function create(req, res, next) {
   if (isValid.error) {
     return res.status(400).send({ message: isValid.error.details[0].message });
   }
-  const project = req.body;
+
+  const {
+    name,
+    description,
+    type,
+    status,
+    location,
+    client,
+    architect,
+    size,
+    value,
+    completed,
+  } = req.body;
+
+  const files = req.files;
+
   try {
-    const isExist = await Project.findOne(project);
-    if (isExist) {
-      return res.status(400).send({ message: "This project already exist" });
-    }
-    const newProject = await Project.create(project);
+    const getPathFromUrl = (url, folder) => folder + url.split(folder)[1];
+
+    const images = files.map((file) => getPathFromUrl(file.path, "/projects"));
+    const newProject = await Project.create({
+      name,
+      type,
+      status,
+      location,
+      client,
+      architect,
+      size,
+      value,
+      completed,
+      description,
+      images,
+    });
+
     return res.status(201).send(newProject);
   } catch (e) {
     next(e);
