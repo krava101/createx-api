@@ -7,8 +7,8 @@ const router = express.Router();
 const jsonParser = express.json();
 
 router.get("/", projects.getAllProjects);
+router.get("/:id", projects.current);
 router.post("/", auth, jsonParser, upload.array("images"), projects.create);
-router.get("/:id", auth, projects.current);
 router.patch("/:id", auth, jsonParser, projects.update);
 router.delete("/:id", auth, projects.remove);
 
