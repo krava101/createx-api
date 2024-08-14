@@ -1,16 +1,36 @@
 import Joi from "joi";
 
 export const projectSchema = Joi.object({
-  name: Joi.string().required("Name is required"),
-  type: Joi.string().required("Type is required"),
-  status: Joi.string().required("Status is required"),
-  location: Joi.string().required("Location is required"),
-  client: Joi.string().required("Client is required"),
-  architect: Joi.string().required("Architect is required"),
-  size: Joi.string().required("Size is required"),
-  value: Joi.string().required("Value is required"),
-  completed: Joi.string().required("Completed is required"),
-  description: Joi.string().required("Description is required"),
+  name: Joi.string()
+    .required()
+    .messages({ "any.required": "Name is required" }),
+  type: Joi.string()
+    .required()
+    .messages({ "any.required": "Type is required" }),
+  status: Joi.string()
+    .required()
+    .messages({ "any.required": "Status is required" }),
+  location: Joi.string()
+    .required()
+    .messages({ "any.required": "Location is required" }),
+  client: Joi.string()
+    .required()
+    .messages({ "any.required": "Client is required" }),
+  architect: Joi.string()
+    .required()
+    .messages({ "any.required": "Architect is required" }),
+  size: Joi.string()
+    .required()
+    .messages({ "any.required": "Size is required" }),
+  value: Joi.string()
+    .required()
+    .messages({ "any.required": "Value is required" }),
+  completed: Joi.string()
+    .required()
+    .messages({ "any.required": "Completed is required" }),
+  description: Joi.string()
+    .required()
+    .messages({ "any.required": "Description is required" }),
 });
 
 export const projectIdSchema = Joi.string().length(24);

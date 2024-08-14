@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+const projectImgSchema = new mongoose.Schema({
+  src: {
+    type: String,
+    required: [true, "Image is required"],
+  },
+});
+
 const projectSchema = new mongoose.Schema(
   {
     name: {
@@ -42,7 +49,10 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: [true, "Description is required"],
     },
-    images: [String],
+    images: {
+      type: [projectImgSchema],
+      required: [true, "Images are required"],
+    },
   },
   {
     versionKey: false,

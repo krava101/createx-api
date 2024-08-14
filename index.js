@@ -4,6 +4,7 @@ import router from "./routes/index.js";
 import morgan from "morgan";
 import cors from "cors";
 import "./server.js";
+import "./gallery.js";
 
 const app = express();
 const port = process.env.PORT || 3000;

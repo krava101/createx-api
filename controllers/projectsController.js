@@ -1,3 +1,5 @@
+import { clearTmpFolder } from "../helpers/clearTmp.js";
+import uploadImagesFromTmp from "../helpers/uploadImagesFromTmp.js";
 import Project from "../models/projects.js";
 import {
   projectSchema,
@@ -15,43 +17,29 @@ async function getAllProjects(req, res, next) {
 }
 
 async function create(req, res, next) {
-  const isValid = projectSchema.validate(req.body);
+  const project = req.body;
+  const files = req.files;
+  const isValid = projectSchema.validate(project);
+
   if (isValid.error) {
+    await clearTmpFolder();
     return res.status(400).send({ message: isValid.error.details[0].message });
   }
-
-  const {
-    name,
-    description,
-    type,
-    status,
-    location,
-    client,
-    architect,
-    size,
-    value,
-    completed,
-  } = req.body;
-
-  const files = req.files;
+  if (files.length < 3) {
+    await clearTmpFolder();
+    return res.status(400).send({ message: "Atleast 3 images required" });
+  }
+  if (files.length > 6) {
+    await clearTmpFolder();
+    return res.status(400).send({ message: "Maximum number of images is 6" });
+  }
 
   try {
-    const getPathFromUrl = (url, folder) => folder + url.split(folder)[1];
-
-    const images = files.map((file) => getPathFromUrl(file.path, "/projects"));
-    const newProject = await Project.create({
-      name,
-      type,
-      status,
-      location,
-      client,
-      architect,
-      size,
-      value,
-      completed,
-      description,
-      images,
-    });
+    const newImages = await uploadImagesFromTmp(files, "projects");
+    const images = newImages.map((file) => ({
+      src: `/${file.asset_folder}/${file.original_filename.split(".")[0]}`,
+    }));
+    const newProject = await Project.create({ ...project, images });
 
     return res.status(201).send(newProject);
   } catch (e) {
