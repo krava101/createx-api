@@ -7,6 +7,9 @@ const router = express.Router();
 const jsonParser = express.json();
 
 router.get("/", services.getServices);
-router.post("/", auth, jsonParser, download.array("images"), services.create);
+router.get("/:id", auth, services.current);
+router.post("/", auth, jsonParser, download.array("image"), services.create);
+router.patch("/:id", auth, jsonParser, services.update);
+router.delete("/:id", auth, services.remove);
 
 export default router;

@@ -13,7 +13,17 @@ const offerSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-    timestamps: true,
+    timestamps: false,
+  }
+);
+
+const imgSchema = new mongoose.Schema(
+  {
+    src: String,
+  },
+  {
+    versionKey: false,
+    timestamps: false,
   }
 );
 
@@ -27,13 +37,13 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: [true, "Status is required"],
     },
-    image: {
-      type: String,
-      required: [true, "Image is required"],
-    },
     offers: {
       type: [offerSchema],
       required: [true, "Offers are required"],
+    },
+    image: {
+      type: imgSchema,
+      required: [true, "Image is required"],
     },
   },
   {

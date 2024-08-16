@@ -33,8 +33,6 @@ export const projectSchema = Joi.object({
     .messages({ "any.required": "Description is required" }),
 });
 
-export const projectIdSchema = Joi.string().length(24);
-
 export const projectUpdateSchema = Joi.object({
   name: Joi.string(),
   type: Joi.string(),

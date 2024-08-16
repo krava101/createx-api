@@ -22,3 +22,9 @@ export const serviceSchema = Joi.object({
     .required()
     .messages({ "any.required": "Offers are required" }),
 });
+
+export const serviceUpdSchema = Joi.object({
+  type: Joi.string(),
+  status: Joi.string(),
+  offers: Joi.array().items(offerSchema).length(2),
+});
