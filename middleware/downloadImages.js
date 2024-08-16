@@ -3,9 +3,12 @@ import path from "path";
 import { nanoid } from "nanoid";
 import HttpError from "../helpers/HttpError.js";
 
+const tmpDirectory =
+  process.env.NODE_ENV === "production" ? "/tmp" : path.resolve("tmp");
+
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, path.resolve("tmp"));
+    cb(null, tmpDirectory);
   },
   filename(req, file, cb) {
     const originalname = file.originalname.replace(/\s/g, "_");
