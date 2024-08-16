@@ -27,8 +27,14 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: [true, "Status is required"],
     },
-    img: String,
-    offers: [offerSchema],
+    image: {
+      type: String,
+      required: [true, "Image is required"],
+    },
+    offers: {
+      type: [offerSchema],
+      required: [true, "Offers are required"],
+    },
   },
   {
     versionKey: false,
