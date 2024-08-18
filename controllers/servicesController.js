@@ -48,6 +48,7 @@ async function create(req, res, next) {
     return res.status(400).send({ message: "Only 1 img allowed for Service" });
   }
   if (isValid.error) {
+    await clearTmpFolder(files);
     return res.status(400).send({ message: isValid.error.details[0].message });
   }
 
